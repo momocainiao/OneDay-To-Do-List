@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OneDay To‑Do</title>
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" href="./icons/icon-192.png" sizes="192x192" />
+  <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="app" aria-label="待办应用">
+    <header class="header">
+      <h1>To‑Do</h1>
+      <form id="add-form" aria-label="添加待办" autocomplete="off">
+        <input id="new-todo" type="text" placeholder="输入待办内容并按回车…" aria-label="待办内容" />
+        <button type="submit" class="add-btn" aria-label="添加">添加</button>
+      </form>
+      <button id="install-btn" class="secondary" style="display:none" aria-label="安装应用">安装应用</button>
+    </header>
+
+    <section class="controls" aria-label="过滤和统计">
+      <div class="filters" role="tablist" aria-label="筛选">
+        <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">全部</button>
+        <button class="filter-btn" data-filter="active" role="tab" aria-selected="false">未完成</button>
+        <button class="filter-btn" data-filter="completed" role="tab" aria-selected="false">已完成</button>
+      </div>
+      <div class="status">
+        <span id="items-left">0 项未完成</span>
+        <button id="clear-completed" class="secondary">清除已完成</button>
+      </div>
+    </section>
+
+    <section class="list-wrap" aria-label="待办列表">
+      <ul id="todo-list" class="todo-list"></ul>
+    </section>
+
+    <footer class="footer">
+      <small>数据存储在浏览器本地</small>
+    </footer>
+  </main>
+
+  <script type="module" src="./app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+          .catch(err => console.error('SW 注册失败:', err));
+      });
+    }
+  </script>
+</body>
+</html>
